@@ -1,0 +1,62 @@
+.terminal {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    border: 3px solid green;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background: black;
+    color: green;
+}
+
+.line {
+    margin: 3px 0;
+}
+
+.name {
+    color: rgb(209, 92, 37);
+}
+
+.location:before {
+    content: '@';
+    color: green;
+}
+
+.location {
+    color: rgb(180, 180, 180);
+}
+
+.event:before {
+    content: '\00a0';
+}
+
+.command {
+    position: relative;
+}
+
+.command:before {
+    content: ':\00a0';
+}
+
+.active .command:after {
+    content: '';
+    width: 8px;
+    height: 2px;
+    margin-left: 2px;
+    background: rgb(0, 206, 0);
+    opacity: 1;
+    position: absolute;
+    bottom: 0;
+    display: inline-block;
+    animation: blink 2s linear infinite alternate;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
