@@ -8,7 +8,7 @@
 
     box-sizing: border-box;
     border: 3px solid green;
-    border-radius: 5px;
+    border-radius:10px;
 }
 
 .terminal.active {
@@ -24,7 +24,9 @@
 }
 
 .line {
+    display: flex;
     margin: 3px 0;
+    width: 100%;
 }
 
 .name {
@@ -40,39 +42,21 @@
     color: rgb(180, 180, 180);
 }
 
-.event:before {
-    content: '\00a0';
+.command-line .location:after {
+    content: ': ';
+    color: green;
 }
 
 .command {
-    position: relative;
+    flex-grow: 1;
+    background: none;
+    border: none;
+    outline: none;
+    color: green;
+    margin: 0 5px;
 }
 
-.command:before {
-    content: ':\00a0';
-}
-
-.line.active .command:after { 
-    display: inline-block;
-    position: absolute;
-    bottom: 0;
-    width: 8px;
-    height: 2px;
-    margin-left: 2px;
-
-    content: '';
-
-    background: rgb(0, 206, 0);
-    opacity: 1;
-    animation: blink 2s linear infinite alternate;
-}
-
-@keyframes blink {
-    50% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
+.command::selection {
+    background: green;
+    color: rgb(195, 195, 195);
 }

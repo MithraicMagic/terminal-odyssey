@@ -1,3 +1,5 @@
+const mainHandler = new MainHandler();
+
 const LINETYPE = {
     INPUT: 0,
     EVENT: 1,
@@ -8,55 +10,38 @@ class Terminal {
     constructor() {
         this.name = 'nick';
         this.location = 'terminal';
-        this.command = '';
-        this.buffer = '';
 
         this.history = [];
-        this.historyIndex = 0;
+        this.historyIndex = -1;
 
         this.removedLine = null;
+        
+        mainHandler.init();
     }
 
     parseInput(m) {
-        switch (m.key) {
-            case 'Backspace':
-                this.command = this.command.slice(0, -1);
-                break;
-            case 'Delete':
-                this.buffer = this.buffer.substr(1, this.buffer.length - 1);
-                break;
-            case 'ArrowLeft':
-                this.buffer = this.command.charAt(this.command.length - 1) + this.buffer;
-                this.command = this.command.slice(0, -1);
-                break;
-            case 'ArrowRight':
-                this.command += this.buffer.charAt(0);
-                this.buffer = this.buffer.substr(1, this.buffer.length - 1);
-                break;
-            case 'ArrowUp':
-            //TODO add history
-            case 'ArrowDown':
-            //TODO add history
-            case 'Shift':
-            case 'Control':
-                break;
-            default:
-                this.command += m.key;
-                break;
+        if (m.key === 'Enter') {
+            this.saveInput();
+            mainHandler.handle(this.getInputData());
+        } else if (m.key === 'ArrowUp') {
+            if (this.historyIndex + 1 < this.history.length) {
+                this.historyIndex++;
+                document.querySelector('.line.active .command').value = this.history[this.historyIndex];
+            }
+        } else if (m.key === 'ArrowDown') {
+            if (this.historyIndex >= 0) {
+                this.historyIndex--;
+                if (this.historyIndex !== -1) {
+                    document.querySelector('.line.active .command').value = this.history[this.historyIndex];
+                } else {
+                    document.querySelector('.line.active .command').value = '';
+                }
+            }
         }
-
-        this.renderInput();
-    }
-
-    renderInput() {
-        document.querySelector('.line.active .command').innerHTML = this.command.replaceAll(' ', '&nbsp;');
-        document.querySelector('.line.active .buffer').innerHTML = this.buffer.replaceAll(' ', '&nbsp;');
     }
 
     addNewLine(type, data) {
-        this.command = '';
-        this.buffer = '';
-        this.historyIndex = 0;
+        this.historyIndex = -1;
 
         const line = document.createElement('div');
         const name = document.createElement('span');
@@ -68,18 +53,29 @@ class Terminal {
 
         switch (type) {
             case LINETYPE.INPUT:
-                if (document.querySelector('.line.active')) document.querySelector('.line.active').classList.remove('active');
-                const command = document.createElement('span');
-                const buffer = document.createElement('span');
+                if (document.querySelector('.line.active')) {
+                    const active = document.querySelector('.line.active');
+                    active.classList.remove('active');
+                    active.children[2].disabled = true;
+                }
+                const command = document.createElement('input');
 
-                line.classList.add('active');
                 command.className = 'command';
-                buffer.className = 'buffer';
+                command.type = 'text';
+                command.setAttribute('autocapitalize', 'off');
+                command.setAttribute('autocomplete', 'off');
+                command.setAttribute('autocorrect', 'off');
+                command.setAttribute('spellcheck', 'false');
 
+                line.classList.add('active', 'command-line');
                 name.textContent = data.name;
                 location.textContent = data.location;
 
-                line.append(name, location, command, buffer);
+                command.addEventListener('keydown', (m) => {
+                    if (document.querySelector('.terminal').classList.contains('active')) this.parseInput(m);
+                });
+
+                line.append(name, location, command);
 
                 this.name = data.name;
                 this.location = data.location;
@@ -103,16 +99,17 @@ class Terminal {
         }
 
         document.querySelector('.lines').appendChild(line);
+        if (type === LINETYPE.INPUT) line.children[2].focus();
     }
 
     saveInput() {
-        this.history.push(this.command + this.buffer);
+        if (document.querySelector('.line.active .command').value) this.history.unshift(document.querySelector('.line.active .command').value);
     }
 
     getInputData() {
         const name = document.querySelector('.line.active .name').textContent;
         const location = document.querySelector('.line.active .location').textContent;
-        const fullInput = this.command + this.buffer;
+        const fullInput = document.querySelector('.line.active .command').value;
         const splitInput = fullInput.split(/\s+/);
 
         return { name, location, input: fullInput, command: splitInput[0], parameters: splitInput.shift() }

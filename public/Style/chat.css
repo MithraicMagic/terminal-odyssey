@@ -1,5 +1,6 @@
 .chat {
     display: none;
+    overflow: auto;
     width: 100%;
     height: calc(100% - 46px);
     flex-direction: column;
@@ -8,7 +9,7 @@
 
     box-sizing: border-box;
     border: 3px solid rgb(211, 56, 0);
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 .chat.active {
@@ -63,7 +64,7 @@
 
 .bottom input {
     flex-grow: 1;
-    padding: 5px;
+    padding: 8px;
 
     background: rgb(8, 8, 8);
     color: white;
@@ -75,7 +76,7 @@
 }
 
 .bottom button {
-    padding: 5px;
+    padding: 8px;
     cursor: pointer;
 
     color: rgb(189, 189, 189);
