@@ -49,8 +49,8 @@ class Terminal {
     }
 
     renderInput() {
-        document.querySelector('.active .command').innerHTML = this.command.replaceAll(' ', '&nbsp;');
-        document.querySelector('.active .buffer').innerHTML = this.buffer.replaceAll(' ', '&nbsp;');
+        document.querySelector('.line.active .command').innerHTML = this.command.replaceAll(' ', '&nbsp;');
+        document.querySelector('.line.active .buffer').innerHTML = this.buffer.replaceAll(' ', '&nbsp;');
     }
 
     addNewLine(type, data) {
@@ -68,7 +68,7 @@ class Terminal {
 
         switch (type) {
             case LINETYPE.INPUT:
-                if (document.querySelector('.active')) document.querySelector('.active').classList.remove('active');
+                if (document.querySelector('.line.active')) document.querySelector('.line.active').classList.remove('active');
                 const command = document.createElement('span');
                 const buffer = document.createElement('span');
 
@@ -102,12 +102,7 @@ class Terminal {
                 break;
         }
 
-        document.querySelector('.terminal').appendChild(line);
-    }
-
-    deleteLastLine() {
-        this.removedLine = document.querySelector('.terminal').lastElementChild;
-        document.querySelector('.terminal').removeChild(this.removedLine);
+        document.querySelector('.lines').appendChild(line);
     }
 
     saveInput() {
@@ -115,8 +110,8 @@ class Terminal {
     }
 
     getInputData() {
-        const name = document.querySelector('.active .name').textContent;
-        const location = document.querySelector('.active .location').textContent;
+        const name = document.querySelector('.line.active .name').textContent;
+        const location = document.querySelector('.line.active .location').textContent;
         const fullInput = this.command + this.buffer;
         const splitInput = fullInput.split(/\s+/);
 

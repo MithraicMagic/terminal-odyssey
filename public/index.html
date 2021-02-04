@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terminal Odyssey</title>
 
-    <link rel="stylesheet" href="Style/style.css">
+    <link rel="stylesheet" href="Style/main.css">
     <link rel="stylesheet" href="Style/terminal.css">
     <link rel="stylesheet" href="Style/chat.css">
 
@@ -16,8 +16,33 @@
 
 <body onload="init()">
     <div class="content">
-        <div class="terminal"></div>
-        <div class="chat"></div>
+        <div class="tabs">
+            <div class="ter tab active" onclick="switchWindow(0)">Terminal</div>
+            <div class="cha tab" onclick="switchWindow(1)">Chat</div>
+        </div>
+        <div class="terminal active">
+            <div class="lines-wrapper">
+                <div class="lines"></div>
+            </div>
+        </div>
+
+        <div class="chat">
+            <div class="history-wrapper">
+                <div class="history">
+                    <div class="group">
+                        <div class="author">Nick</div>
+                        <div class="messages">
+                            <div class="message">This is a message!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom">
+                <input type="text" placeholder="Type here...">
+                <button>Send</button>
+            </div>
+        </div>
+
     </div>
 </body>
 
