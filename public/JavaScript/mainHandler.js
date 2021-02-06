@@ -1,12 +1,14 @@
-const speech = new SpeechHandler();
-
 class MainHandler {
     constructor() {
         this.commands = new Map();
+
+        this.speech = new SpeechHandler();
+        this.explorer = new ExplorerHandler();
     }
 
     init() {
-        this.register(speech, 'say', 'shout');
+        this.register(this.speech, 'say', 'shout');
+        this.register(this.explorer, 'cd', 'ls', 'open');
     }
 
     register(handler, ...commands) {

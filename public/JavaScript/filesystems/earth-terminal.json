@@ -1,0 +1,35 @@
+{
+    "root": [
+        {
+            "name": "etc",
+            "type": "folder",
+            "content": []
+        },
+        {
+            "name": "usr",
+            "type": "folder",
+            "content": [
+                {
+                    "name": "documents",
+                    "type": "folder",
+                    "content": []
+                },
+                {
+                    "name": "images",
+                    "type": "folder",
+                    "content": []
+                },
+                {
+                    "name": "videos",
+                    "type": "folder",
+                    "content": []
+                }
+            ]
+        },
+        {
+            "name": "var",
+            "type": "folder",
+            "content": []
+        }
+    ]
+}

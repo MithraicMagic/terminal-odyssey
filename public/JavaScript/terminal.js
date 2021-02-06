@@ -1,5 +1,3 @@
-const mainHandler = new MainHandler();
-
 const LINETYPE = {
     INPUT: 0,
     EVENT: 1,
@@ -14,15 +12,14 @@ class Terminal {
         this.history = [];
         this.historyIndex = -1;
 
-        this.removedLine = null;
-        
-        mainHandler.init();
+        this.mainHandler = new MainHandler();
+        this.mainHandler.init();
     }
 
     parseInput(m) {
         if (m.key === 'Enter') {
             this.saveInput();
-            mainHandler.handle(this.getInputData());
+            this.mainHandler.handle(this.getInputData());
         } else if (m.key === 'ArrowUp') {
             if (this.historyIndex + 1 < this.history.length) {
                 this.historyIndex++;
@@ -56,9 +53,14 @@ class Terminal {
                 if (document.querySelector('.line.active')) {
                     const active = document.querySelector('.line.active');
                     active.classList.remove('active');
-                    active.children[2].disabled = true;
+                    active.children[3].disabled = true;
                 }
+
+                const path = document.createElement('span');
                 const command = document.createElement('input');
+
+                path.className = 'path';
+                path.textContent = this.mainHandler.explorer.currentPath;
 
                 command.className = 'command';
                 command.type = 'text';
@@ -75,7 +77,7 @@ class Terminal {
                     if (document.querySelector('.terminal').classList.contains('active')) this.parseInput(m);
                 });
 
-                line.append(name, location, command);
+                line.append(name, location, path, command);
 
                 this.name = data.name;
                 this.location = data.location;
@@ -99,7 +101,7 @@ class Terminal {
         }
 
         document.querySelector('.lines').appendChild(line);
-        if (type === LINETYPE.INPUT) line.children[2].focus();
+        if (type === LINETYPE.INPUT) line.children[3].focus();
     }
 
     saveInput() {
@@ -112,6 +114,6 @@ class Terminal {
         const fullInput = document.querySelector('.line.active .command').value;
         const splitInput = fullInput.split(/\s+/);
 
-        return { name, location, input: fullInput, command: splitInput[0], parameters: splitInput.shift() }
+        return { name, location, input: fullInput, command: splitInput[0], parameters: splitInput.slice(1, splitInput.length) }
     }
 }

@@ -43,7 +43,16 @@
 }
 
 .command-line .location:after {
-    content: ': ';
+    content: ':';
+    color: green;
+}
+
+.path {
+    color: rgb(209, 92, 37);
+}
+
+.path:after {
+    content: '$';
     color: green;
 }
 
