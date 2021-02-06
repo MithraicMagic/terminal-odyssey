@@ -6,8 +6,8 @@ const LINETYPE = {
 
 class Terminal {
     constructor() {
-        this.name = 'nick';
-        this.location = 'terminal';
+        this.name = '';
+        this.location = '';
 
         this.history = [];
         this.historyIndex = -1;

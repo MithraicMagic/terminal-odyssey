@@ -1,7 +1,7 @@
 const terminal = new Terminal();
 
 function init() {
-    terminal.addNewLine(LINETYPE.INPUT, { name: 'nick', location: 'terminal' });
+    terminal.addNewLine(LINETYPE.INPUT, { name: 'nick', location: 'earth-terminal' });
 }
 
 function switchWindow(value) {

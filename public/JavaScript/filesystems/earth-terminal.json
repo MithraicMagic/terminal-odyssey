@@ -1,25 +1,33 @@
 {
-    "root": [
+    "id": 0,
+    "name": "root",
+    "type": "folder",
+    "content": [
         {
+            "id": 1,
             "name": "etc",
             "type": "folder",
             "content": []
         },
         {
+            "id": 2,
             "name": "usr",
             "type": "folder",
             "content": [
                 {
+                    "id": 4,
                     "name": "documents",
                     "type": "folder",
                     "content": []
                 },
                 {
+                    "id": 5,
                     "name": "images",
                     "type": "folder",
                     "content": []
                 },
                 {
+                    "id": 6,
                     "name": "videos",
                     "type": "folder",
                     "content": []
@@ -27,6 +35,7 @@
             ]
         },
         {
+            "id": 3,
             "name": "var",
             "type": "folder",
             "content": []
